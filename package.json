@@ -27,7 +27,8 @@
     "rollup": "rollup -c --bundleConfigAsCjs",
     "clean": "rm -rf ./lib && rm -rf ./types && rm -rf ./cmj && rm -rf ./test-build",
     "watch": "rollup -c -w",
-    "size": "size-limit"
+    "size": "size-limit",
+    "prepare": "npm run build"
   },
   "targets": {
     "none": {}
