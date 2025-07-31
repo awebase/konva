@@ -190,6 +190,7 @@ function checkDefaultFill(config?: TextConfig) {
  * });
  */
 export class Text extends Shape<TextConfig> {
+  truncated = false;
   textArr: Array<{ text: string; width: number; lastInParagraph: boolean }>;
   _partialText: string;
   _partialTextX = 0;
@@ -414,6 +415,16 @@ export class Text extends Shape<TextConfig> {
   }
 
   /**
+   * Returns `true` if the text could not be fully drawn inside the bounds of the Text element.
+   * @method
+   * @name Konva.Text#isTruncated
+   * @returns {Boolean}
+   */
+  isTruncated() {
+    return this.truncated;
+  }
+
+  /**
    * measure string with the font of current text shape.
    * That method can't handle multiline text.
    * @method
@@ -507,6 +518,7 @@ export class Text extends Shape<TextConfig> {
       shouldAddEllipsis = this.ellipsis();
 
     this.textArr = [];
+    this.truncated = false;
     getDummyContext().font = this._getContextFont();
     const additionalWidth = shouldAddEllipsis
       ? this._getTextWidth(ELLIPSIS)
@@ -666,6 +678,7 @@ export class Text extends Shape<TextConfig> {
       shouldAddEllipsis = this.ellipsis();
 
     const lastLine = this.textArr[this.textArr.length - 1];
+    this.truncated = true;
     if (!lastLine || !shouldAddEllipsis) {
       return;
     }
